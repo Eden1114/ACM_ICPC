@@ -175,14 +175,50 @@ long long PowerMod(long long a
 ## 12.STL模板类
 ###pair  
   pair 是 一种模版类型。每个pair 可以存储两个值。这两种值无限制。也可以将自己写的struct的对象放进去。  
-    `pair<string,int> p;`   
-    `pair<int ,int > p;`  
-    `pair<double,int> p;`  
+    `pair<string,int> p1;`   
+    `pair<int,int> p2;`  
+    `pair<double,int> p3;`  
 ###vector
+```cpp
+#include<vector>
+vector<int> vec;
+vec.begin();
+vec.insert();
+
+```
 ###string
 ###set
+```
+#include <set>
+set<int> se;
+se.begin();//返回set容器的第一个元素
+
+se.end();//返回set容器的最后一个元素
+
+se.clear();//删除set容器中的所有的元素
+
+se.empty();//判断set容器是否为空
+
+se.max_size();//返回set容器可能包含的元素最大个数
+
+se.size();//返回当前set容器中的元素个数
+
+se.rbegin();//reverse_begin,返回的值和end()相同
+
+se.rend();//reverse_end,返回的值和rbegin()相同
+
+se.count();//查找set中某键值出现的次数(1或0)
+```
 ###map
+```
+#include <map>
+
+```
 ###stack
+```cpp
+#include <stack>
+
+```
 ###queue
 
 ## 13.其他
