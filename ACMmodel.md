@@ -182,7 +182,9 @@ long long PowerMod(long long a
 ```cpp
 #include<vector>
 vector<int> vec;
-vec.begin();
+vec.begin();//返回第一个元素
+vec.end();//返回第二个元素
+vec.push_back();//在最后添加元素
 vec.insert();
 
 ```
@@ -221,7 +223,95 @@ se.count();//查找set中某键值出现的次数(1或0)
 ```
 ###queue
 
-## 13.其他
+
+###priority_queue
+```
+	#include <queue>
+	priority_queue<int> p_que;
+	p_que.push(1);//添加元素1
+	p_que.pop();//弹出第一个元素
+	p_que.top();//返回第一个元素
+	p_que.size();返回优先队列中的元素个数
+	/*
+		priority_queue 添加进新的元素后会自动排序
+	*/
+```
+## 13.计算几何
+三 重心法
+
+上面这个方法简单易懂，速度也快，下面这个方法速度更快，只是稍微多了一点数学而已
+
+三角形的三个点在同一个平面上，如果选中其中一个点，其他两个点不过是相对该点的位移而已，比如选择点A作为起点，那么点B相当于在AB方向移动一段距离得到，而点C相当于在AC方向移动一段距离得到。
+
+
+
+所以对于平面内任意一点，都可以由如下方程来表示
+
+P = A +  u * (C – A) + v * (B - A) // 方程1
+
+如果系数u或v为负值，那么相当于朝相反的方向移动，即BA或CA方向。那么如果想让P位于三角形ABC内部，u和v必须满足什么条件呢？有如下三个条件
+
+u >= 0
+
+v >= 0
+
+u + v <= 1
+
+几个边界情况，当u = 0且v = 0时，就是点A，当u = 0,v = 1时，就是点B，而当u = 1, v = 0时，就是点C
+
+整理方程1得到P – A = u(C - A) + v(B - A)
+
+令v0 = C – A, v1 = B – A, v2 = P – A，则v2 = u * v0 + v * v1，现在是一个方程，两个未知数，无法解出u和v，将等式两边分别点乘v0和v1的到两个等式
+
+(v2) • v0 = (u * v0 + v * v1) • v0
+
+(v2) • v1 = (u * v0 + v * v1) • v1
+
+注意到这里u和v是数，而v0，v1和v2是向量，所以可以将点积展开得到下面的式子。
+
+v2 • v0 = u * (v0 • v0) + v * (v1 • v0)  // 式1
+
+v2 • v1 = u * (v0 • v1) + v * (v1• v1)   // 式2
+
+解这个方程得到
+
+u = ((v1•v1)(v2•v0)-(v1•v0)(v2•v1)) / ((v0•v0)(v1•v1) - (v0•v1)(v1•v0))
+
+v = ((v0•v0)(v2•v1)-(v0•v1)(v2•v0)) / ((v0•v0)(v1•v1) - (v0•v1)(v1•v0))
+
+是时候上代码了，这段代码同样用到上面的Vector3类
+
+```
+// Determine whether point P in triangle ABC
+bool PointinTriangle(Vector3 A, Vector3 B, Vector3 C, Vector3 P)
+{
+    Vector3 v0 = C - A ;
+    Vector3 v1 = B - A ;
+    Vector3 v2 = P - A ;
+
+    float dot00 = v0.Dot(v0) ;
+    float dot01 = v0.Dot(v1) ;
+    float dot02 = v0.Dot(v2) ;
+    float dot11 = v1.Dot(v1) ;
+    float dot12 = v1.Dot(v2) ;
+
+    float inverDeno = 1 / (dot00 * dot11 - dot01 * dot01) ;
+
+    float u = (dot11 * dot02 - dot01 * dot12) * inverDeno ;
+    if (u < 0 || u > 1) // if u out of range, return directly
+    {
+        return false ;
+    }
+    float v = (dot00 * dot12 - dot01 * dot02) * inverDeno ;
+    if (v < 0 || v > 1) 
+    // if v out of range, return directly
+    {
+        return false ;
+    }
+    return u + v <= 1 ;
+}
+```
+## 14.其他
 1. 关于取模，有时关于一个固定的值取模，可以通过位运算实现。
 2. 读入按照字符串比较（数字比较） 
  
