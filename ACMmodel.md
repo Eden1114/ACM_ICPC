@@ -186,9 +186,21 @@ vec.begin();//返回第一个元素
 vec.end();//返回第二个元素
 vec.push_back();//在最后添加元素
 vec.insert();
+vec.front();//返回第一个元素
+vec.back();//返回最后一个函数
+vec.size();//返回元素个数
+
+/*
+ * 注意，只能通过&vec[i]获得第i个元素的地址，无法通过vec + i 获得。
+ */
 
 ```
 ###string
+```
+string str;
+str.c_str();//返回对应的C type 字符串
+
+```
 ###set
 ```
 #include <set>
@@ -210,18 +222,37 @@ se.rbegin();//reverse_begin,返回的值和end()相同
 se.rend();//reverse_end,返回的值和rbegin()相同
 
 se.count();//查找set中某键值出现的次数(1或0)
+
+se.erase()//删除某个元素
+
 ```
 ###map
 ```
 #include <map>
 
 ```
+###multimap
+```
+#include <map>
+multimap<int,int> m_map;
+m_map.
+
+```
+
+
 ###stack
 ```cpp
 #include <stack>
 
 ```
 ###queue
+```
+#include <queue>
+queue<int> que;
+que.push()
+que.pop()
+que.size()
+```
 
 
 ###priority_queue
@@ -314,4 +345,6 @@ bool PointinTriangle(Vector3 A, Vector3 B, Vector3 C, Vector3 P)
 ## 14.其他
 1. 关于取模，有时关于一个固定的值取模，可以通过位运算实现。
 2. 读入按照字符串比较（数字比较） 
+3. `ios::sync_with_stdio(false)` 使用后，cin 和 scanf 就不能混用了  
+
  
