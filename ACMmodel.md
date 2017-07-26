@@ -225,6 +225,13 @@ se.count();//查找set中某键值出现的次数(1或0)
 
 se.erase()//删除某个元素
 
+multiset<int> m_se;
+
+
+bitset <int> b_se;
+
+
+
 ```
 ###map
 ```
@@ -266,6 +273,12 @@ que.size()
 	/*
 		priority_queue 添加进新的元素后会自动排序
 	*/
+```
+
+### hash
+```
+unordered_map
+unordeeed_set
 ```
 ## 13.计算几何
 三 重心法
@@ -342,9 +355,26 @@ bool PointinTriangle(Vector3 A, Vector3 B, Vector3 C, Vector3 P)
     return u + v <= 1 ;
 }
 ```
-## 14.其他
+## 高精度（大数）
+```
+for(int i = 0;i < 5;i++)
+{
+	c[i] = a[i] + [i] +cd;
+	cd = c[i]/10;
+	cd[i] %= 10;
+}
+//加法
+
+第十讲
+
+
+for（int i = 0;i  <）
+```
+## 15.其他
 1. 关于取模，有时关于一个固定的值取模，可以通过位运算实现。
 2. 读入按照字符串比较（数字比较） 
 3. `ios::sync_with_stdio(false)` 使用后，cin 和 scanf 就不能混用了  
+4. 迭代器失效的问题
+5. `__builtin_popcount();`用于处理
 
  
