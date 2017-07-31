@@ -2,7 +2,6 @@
 STL_set
 Question:
     HDU6019
-    http://blog.csdn.net/qq_27437781/article/details/68951480
 Method：STL_container_set
 The Haredest Part:
     You should konw something about it..

@@ -3,8 +3,9 @@ Greedy:
     We should find the most effective standard
 to greed the answer.
     To do that, We can find some math formulation
-from the most easy case.
-    Just like special value in math
+from the easy case.
+    Just like the way we use some special value 
+in math exam.
     In this problem, compare function is the most
 important module.
 */

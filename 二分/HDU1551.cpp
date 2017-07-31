@@ -3,6 +3,19 @@
  *时间：2017年07月25日
  *解题思想：二分答案
  *注意：
+ *二分答案模板：
+ *while(right - left > eps)
+ *{
+ *    double mid = (right + left)/2.0;
+ *    if(check(mid))
+ *    {
+ *        left = mid;
+ *    }
+ *    else right = mid;
+ *}
+ *check()函数是重点，根据题意来写。
+ *二分答案适合不方便解出来，但是答案满足在一个区间内单调。
+ *通过二分的思想，不断的接近答案
  */
 //include <bits/stdc++.h>
 #include <algorithm>
