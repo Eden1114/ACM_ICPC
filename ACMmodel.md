@@ -1,7 +1,15 @@
 # ACM模板  
------
- 
-## 1.筛法求素数  
+-----------------
+
+## 0. 算法复杂度分析
+现在的计算机，1秒大约能执行10^8次简单运算   n = 1 000 000 ~ O(n)   n = 10 000 ~ O(nlgn)   n = 1 000 ~ O(n2), O(n2lgn)   n = 100 ~ O(n3)   n = 10 ~ O(an), O(n!)  
+
+也可以算出自己的算法的复杂度，带入数据的量一般为n，超过10^9一般就TLE了。
+
+# 1.数学类
+-------------------------------------
+## 1.1.数论
+### 1.1.1.筛法求素数  
 
 ```cpp
 const int MAX = 1000010;
@@ -27,60 +35,28 @@ void prime()
 }
 ```  
 其中Mark[x] == 0,x就是素数。 
-
-## 2.常用函数
-2.1 `sort(begin,end,compare);`  
-2.2 `binary_search();`  
-2.3 `lower_bound();`  
-2.4 `upper_bound();`  
-2.5 `next_permutation();`  
-2.6 `prev_permutation();`  
-2.7 `itoa();`
-
-## 3.DFS模板
-```cpp
-void dfs(int x,int y,int sum)
-{
-    int i,xx,yy;
-    if(flag == 1)
-        return;
-    //已经访问过的结点不再访问，避免死循环
-        
-    if(x == ex && y == ey && sum == t)
-    {
-        flag = 1;
-        return;
-    }
-    //和
-    
-    int mindis = abs(x-ex) + abs(y-ey);  
-    /*当前点到终点的最短距离*/
-    
-    if(mindis>t-sum||(mindis+ t-sum )%2!=0)  
-        return;
-    for(i=0;i<4;i++)
-    {
-        xx=x+dx[i];
-        yy=y+dy[i];
-        if(xx>=0&&xx<n&&yy>=0&&yy<m&&!vis[xx][yy]&&map[xx][yy]!='X')  
-        /*在map范围内且可以继续搜下去*/
-        {
-            vis[xx][yy]=1;
-            dfs(xx,yy,sum+1);
-            vis[xx][yy]=0;
-        }
-    }
-}
-```
-## 4.最大公约数（欧几里得算法）
+### 1.1.2.最大公约数和最小公倍数（欧几里得算法）
 ```cpp 
 int gcd(int a, int b)
 { 
-    return a == 0 ? b : gcd(b % a, a);
+    return b == 0 ? a : gcd(b, a%b);
 } 
+//利用了恒等式:gcd(a,b) == gcd(b,a mod b)
+
+int lcm(int a,int b)
+{
+	return a/gcd(a,b)*b;
+}
+
+//两份代码都是a > b.
 ```
 
-## 5.错排公式
+### 1.1.3.拓展欧几里得算法
+```cpp
+
+```
+## 1.2.排列组合
+### 1.2.1.错排公式
 问题： n本不同的书放在书架上。现重新摆放，使每本书都不在原来放的位置。有几种摆法？
 
 递归公式：  
@@ -91,313 +67,12 @@ int gcd(int a, int b)
 **D(n) = n! [(-1)^2/2! + … + (-1)^(n-1)/(n-1)! + (-1)^n/n!]**  
 其他算法：  
 **D(n) = [n!/e+0.5]** ，其中e是自然对数的底，[x]为x的整数部分  
-
-## 6.俄罗斯乘法
-两个很大的数直接相乘结果会爆long long,有时使用俄罗斯乘法可以避免。  
-俄罗斯乘法是一种计算两数相乘的算法。 
-举例如下：   
-计算 35*72  
-过程  
-35 72  
-17 144  
-8 288  
-4 576  
-2 1152  
-1 2304  
-从上到下，对每一行，若左边的数字若为奇数，则将右边的数字取出，累加。  
-72 + 144 + 2304 == 2520  
-累加的结果2520即为乘积。  
-
+## 1.3.矩阵
+### 1.3.1.矩阵的实现
+### 1.3.2 矩阵运算
+## 1.4.大数和高精度
+### 1.4.1.大数
 ```cpp
-long long (long long m,long long n)
-{  
-    long long ans = 0;  
-    while(m){
-        if(m & 1)//m是奇数
-        {
-            ans += n; 
-            //ans %= p;
-        }
-        m /= 2;
-        n *= 2;
-        //n %= p;
-    }
-    /*
-    当结果很大的时候
-    如果要返回对p取模的值
-    可以把注释去了
-    */
-    return ans;
-}
-```
-
-## 7.排列组合
-
-## 8.快速幂
-快速幂就是快速计算底数的n次幂。  
-Divide and Conquer  
-
-
-```cpp
-//快速幂 ans == a^b mod c
-
-long long PowerMod(long long a
-, long long b
-/*, long long c*/)
-{
-	long long ans = 1;
-	//a = a % c;
-	while(b > 0)
-	{
-		if(b & 1)
-		{
-			ans *= a;
-			//ans %= c;
-		}
-		b /= 2;
-		a *= a;
-		//a %= c;
-	}
-	return ans;
-	/*
-		去掉注释可以用来取模
-	*/
-}
-```
-
-
-## 9.矩阵乘法
-
-## 10. 算法复杂度分析
-1秒大约能执行10^8次简单运算   n = 1 000 000 ~ O(n)   n = 10 000 ~ O(nlgn)   n = 1 000 ~ O(n2), O(n2lgn)   n = 100 ~ O(n3)   n = 10 ~ O(an), O(n!)  
- 
-## 11.尺取法  
-
-## 12.STL模板类
-###pair  
-  pair 是 一种模版类型。每个pair 可以存储两个值。这两种值无限制。也可以将自己写的struct的对象放进去。  
-    ```
-    std::pair <string,int> p1;
-    std::pair <int,int> p2;
-    std::pair <double,int> p3;
-    
-    p1.first;
-    p1.second;
-    //返回第一个元素，返回第二个元素
-    ```
-###vector
-```cpp
-#include<vector>
-vector<int> vec;
-
-//iterator
-vec.begin();
-vec.end();
-//vec.begin()返回第一个元素的指针,vec.end()返回最后一个元素的`后继`的指针
-//指向最后一个元素的指针是 vec.end()-1
-
-vec.cbegin();
-vec.cend();
-//c 表示const,返回常量指针
-
-vec.rbegin();
-vec.rend();
-vec.crbegin();
-vec.crend();
-//r表示reverse 逆序
-
-
-vector<int>::iterator t = vec.begin();
-
-while(t != vec.end())
-{
-	cout<<*t<<endl;
-	t++;
-}
-//使用迭代器遍历
-
-for(int i : vec)
-{
-	cout<<i<<endl;
-}
-//for循环的高级写法遍历
-
-
-
-vec.push_back();//在最后添加元素
-vec.insert();
-vec.front();//返回第一个元素
-vec.back();//返回最后一个函数
-vec.size();//返回元素个数
-
-/*
- * 注意，只能通过&vec[i]获得第i个元素的地址，无法通过vec + i 获得。
- */
-
-```
-###string
-```
-string str;
-str.c_str();//返回对应的C type 字符串
-
-```
-###set
-```
-#include <set>
-set<int> se;
-se.begin();//返回set容器的第一个元素
-
-se.end();//返回set容器的最后一个元素
-
-se.clear();//删除set容器中的所有的元素
-
-se.empty();//判断set容器是否为空
-
-se.max_size();//返回set容器可能包含的元素最大个数
-
-se.size();//返回当前set容器中的元素个数
-
-se.rbegin();//reverse_begin,返回的值和end()相同
-
-se.rend();//reverse_end,返回的值和rbegin()相同
-
-se.count();//查找set中某键值出现的次数(1或0)
-
-se.erase()//删除某个元素
-
-multiset<int> m_se;
-
-
-bitset <int> b_se;
-
-
-
-```
-###map
-```
-#include <map>
-
-```
-###multimap
-```
-#include <map>
-multimap<int,int> m_map;
-m_map.
-
-```
-
-
-###stack
-```cpp
-#include <stack>
-
-```
-###queue
-```
-#include <queue>
-queue<int> que;
-	que.push();
-	que.pop();
-	que.size();
-	que.empty();
-	que.front();//返回最低端元素
-```
-
-
-###priority_queue
-```
-#include <queue>
-	priority_queue<int> p_que;
-	p_que.push(1);//添加元素1
-	p_que.pop();//弹出第一个元素
-	p_que.top();//返回第一个元素
-	p_que.size();返回优先队列中的元素个数
-	/*
-		priority_queue 添加进新的元素后会自动排序
-	*/
-```
-
-### hash
-```
-unordered_map
-unordeeed_set
-```
-## 13.计算几何
-三 重心法
-
-
-三角形的三个点在同一个平面上，如果选中其中一个点，其他两个点不过是相对该点的位移而已，比如选择点A作为起点，那么点B相当于在AB方向移动一段距离得到，而点C相当于在AC方向移动一段距离得到。
-
-
-
-所以对于平面内任意一点，都可以由如下方程来表示
-
-P = A +  u * (C – A) + v * (B - A) // 方程1
-
-如果系数u或v为负值，那么相当于朝相反的方向移动，即BA或CA方向。那么如果想让P位于三角形ABC内部，u和v必须满足什么条件呢？有如下三个条件
-
-u >= 0
-
-v >= 0
-
-u + v <= 1
-
-几个边界情况，当u = 0且v = 0时，就是点A，当u = 0,v = 1时，就是点B，而当u = 1, v = 0时，就是点C
-
-整理方程1得到P – A = u(C - A) + v(B - A)
-
-令v0 = C – A, v1 = B – A, v2 = P – A，则v2 = u * v0 + v * v1，现在是一个方程，两个未知数，无法解出u和v，将等式两边分别点乘v0和v1的到两个等式
-
-(v2) • v0 = (u * v0 + v * v1) • v0
-
-(v2) • v1 = (u * v0 + v * v1) • v1
-
-注意到这里u和v是数，而v0，v1和v2是向量，所以可以将点积展开得到下面的式子。
-
-v2 • v0 = u * (v0 • v0) + v * (v1 • v0)  // 式1
-
-v2 • v1 = u * (v0 • v1) + v * (v1• v1)   // 式2
-
-解这个方程得到
-
-u = ((v1•v1)(v2•v0)-(v1•v0)(v2•v1)) / ((v0•v0)(v1•v1) - (v0•v1)(v1•v0))
-
-v = ((v0•v0)(v2•v1)-(v0•v1)(v2•v0)) / ((v0•v0)(v1•v1) - (v0•v1)(v1•v0))
-
-是时候上代码了，这段代码同样用到上面的Vector3类
-
-```
-// Determine whether point P in triangle ABC
-bool PointinTriangle(Vector3 A, Vector3 B, Vector3 C, Vector3 P)
-{
-    Vector3 v0 = C - A ;
-    Vector3 v1 = B - A ;
-    Vector3 v2 = P - A ;
-
-    float dot00 = v0.Dot(v0) ;
-    float dot01 = v0.Dot(v1) ;
-    float dot02 = v0.Dot(v2) ;
-    float dot11 = v1.Dot(v1) ;
-    float dot12 = v1.Dot(v2) ;
-
-    float inverDeno = 1 / (dot00 * dot11 - dot01 * dot01) ;
-
-    float u = (dot11 * dot02 - dot01 * dot12) * inverDeno ;
-    if (u < 0 || u > 1) // if u out of range, return directly
-    {
-        return false ;
-    }
-    float v = (dot00 * dot12 - dot01 * dot02) * inverDeno ;
-    if (v < 0 || v > 1) 
-    // if v out of range, return directly
-    {
-        return false ;
-    }
-    return u + v <= 1 ;
-}
-```
-## 14.高精度（大数）
-```
 #include<iostream>   
 #include<string>   
 #include<iomanip>   
@@ -717,6 +392,345 @@ int main(void)
     return 0;  
 }  
 ```
+## 1.4.计算几何
+###1.4.1判断点在三角形内
+三角形的三个点在同一个平面上，如果选中其中一个点，其他两个点不过是相对该点的位移而已，比如选择点A作为起点，那么点B相当于在AB方向移动一段距离得到，而点C相当于在AC方向移动一段距离得到。
+
+所以对于平面内任意一点，都可以由如下方程来表示
+
+P = A +  u * (C – A) + v * (B - A) // 方程1
+
+如果系数u或v为负值，那么相当于朝相反的方向移动，即BA或CA方向。那么如果想让P位于三角形ABC内部，u和v必须满足什么条件呢？有如下三个条件
+
+u >= 0
+
+v >= 0
+
+u + v <= 1
+
+几个边界情况，当u = 0且v = 0时，就是点A，当u = 0,v = 1时，就是点B，而当u = 1, v = 0时，就是点C
+
+整理方程1得到P – A = u(C - A) + v(B - A)
+
+令v0 = C – A, v1 = B – A, v2 = P – A，则v2 = u * v0 + v * v1，现在是一个方程，两个未知数，无法解出u和v，将等式两边分别点乘v0和v1的到两个等式
+
+(v2) • v0 = (u * v0 + v * v1) • v0
+
+(v2) • v1 = (u * v0 + v * v1) • v1
+
+注意到这里u和v是数，而v0，v1和v2是向量，所以可以将点积展开得到下面的式子。
+
+v2 • v0 = u * (v0 • v0) + v * (v1 • v0)  // 式1
+
+v2 • v1 = u * (v0 • v1) + v * (v1• v1)   // 式2
+
+解这个方程得到
+
+u = ((v1•v1)(v2•v0)-(v1•v0)(v2•v1)) / ((v0•v0)(v1•v1) - (v0•v1)(v1•v0))
+
+v = ((v0•v0)(v2•v1)-(v0•v1)(v2•v0)) / ((v0•v0)(v1•v1) - (v0•v1)(v1•v0))
+
+是时候上代码了，这段代码同样用到上面的Vector3类
+
+```
+// Determine whether point P in triangle ABC
+bool PointinTriangle(Vector3 A, Vector3 B, Vector3 C, Vector3 P)
+{
+    Vector3 v0 = C - A ;
+    Vector3 v1 = B - A ;
+    Vector3 v2 = P - A ;
+
+    float dot00 = v0.Dot(v0) ;
+    float dot01 = v0.Dot(v1) ;
+    float dot02 = v0.Dot(v2) ;
+    float dot11 = v1.Dot(v1) ;
+    float dot12 = v1.Dot(v2) ;
+
+    float inverDeno = 1 / (dot00 * dot11 - dot01 * dot01) ;
+
+    float u = (dot11 * dot02 - dot01 * dot12) * inverDeno ;
+    if (u < 0 || u > 1) // if u out of range, return directly
+    {
+        return false ;
+    }
+    float v = (dot00 * dot12 - dot01 * dot02) * inverDeno ;
+    if (v < 0 || v > 1) 
+    // if v out of range, return directly
+    {
+        return false ;
+    }
+    return u + v <= 1 ;
+}
+```
+##其他
+### 8.快速幂
+快速幂就是快速计算底数的n次幂。  
+Divide and Conquer  
+
+
+```cpp
+//快速幂 ans == a^b mod c
+
+long long PowerMod(long long a
+, long long b
+/*, long long c*/)
+{
+	long long ans = 1;
+	//a = a % c;
+	while(b > 0)
+	{
+		if(b & 1)
+		{
+			ans *= a;
+			//ans %= c;
+		}
+		b /= 2;
+		a *= a;
+		//a %= c;
+	}
+	return ans;
+	/*
+		去掉注释可以用来取模
+	*/
+}
+```
+
+### 5.俄罗斯乘法
+两个很大的数直接相乘结果会爆long long,有时使用俄罗斯乘法可以避免。  
+俄罗斯乘法是一种计算两数相乘的算法。 
+举例如下：   
+计算 35*72  
+过程  
+35 72  
+17 144  
+8 288  
+4 576  
+2 1152  
+1 2304  
+从上到下，对每一行，若左边的数字若为奇数，则将右边的数字取出，累加。  
+72 + 144 + 2304 == 2520  
+累加的结果2520即为乘积。  
+
+```cpp
+long long (long long m,long long n)
+{  
+    long long ans = 0;  
+    while(m){
+        if(m & 1)//m是奇数
+        {
+            ans += n; 
+            //ans %= p;
+        }
+        m /= 2;
+        n *= 2;
+        //n %= p;
+    }
+    /*
+    当结果很大的时候
+    如果要返回对p取模的值
+    可以把注释去了
+    */
+    return ans;
+}
+```
+
+# 2.函数库和STL容器
+## 1.常用函数
+2.1 `sort(begin,end,compare);`  
+2.2 `binary_search();`  
+2.3 `lower_bound();`  
+2.4 `upper_bound();`  
+2.5 `next_permutation();`  
+2.6 `prev_permutation();`  
+2.7 `itoa();`
+
+## 12.STL容器
+###pair  
+  pair 是 一种模版类型。每个pair 可以存储两个值。这两种值无限制。也可以将自己写的struct的对象放进去。  
+    
+```cpp
+	std::pair <string,int> p1;
+    std::pair <int,int> p2;
+    std::pair <double,int> p3;
+    p1.first;
+    p1.second;
+    //返回第一个元素，返回第二个元素
+```
+###vector
+```cpp
+#include<vector>
+vector<int> vec;
+
+//iterator
+vec.begin();
+vec.end();
+//vec.begin()返回第一个元素的指针,vec.end()返回最后一个元素的`后继`的指针
+//指向最后一个元素的指针是 vec.end()-1
+
+vec.cbegin();
+vec.cend();
+//c 表示const,返回常量指针
+
+vec.rbegin();
+vec.rend();
+vec.crbegin();
+vec.crend();
+//r表示reverse 逆序
+
+
+vector<int>::iterator t = vec.begin();
+
+while(t != vec.end())
+{
+	cout<<*t<<endl;
+	t++;
+}
+//使用迭代器遍历
+
+for(int i : vec)
+{
+	cout<<i<<endl;
+}
+//for循环的高级写法遍历
+
+
+
+vec.push_back();//在最后添加元素
+vec.insert();
+vec.front();//返回第一个元素
+vec.back();//返回最后一个函数
+vec.size();//返回元素个数
+
+/*
+ * 注意，只能通过&vec[i]获得第i个元素的地址，无法通过vec + i 获得。
+ */
+
+```
+###string
+```
+string str;
+str.c_str();//返回对应的C type 字符串
+
+```
+###set
+```
+#include <set>
+set<int> se;
+se.begin();//返回set容器的第一个元素
+
+se.end();//返回set容器的最后一个元素
+
+se.clear();//删除set容器中的所有的元素
+
+se.empty();//判断set容器是否为空
+
+se.max_size();//返回set容器可能包含的元素最大个数
+
+se.size();//返回当前set容器中的元素个数
+
+se.rbegin();//reverse_begin,返回的值和end()相同
+
+se.rend();//reverse_end,返回的值和rbegin()相同
+
+se.count();//查找set中某键值出现的次数(1或0)
+
+se.erase()//删除某个元素
+
+multiset<int> m_se;
+
+
+bitset <int> b_se;
+
+
+
+```
+###map
+```
+#include <map>
+
+```
+###multimap
+```
+#include <map>
+multimap<int,int> m_map;
+m_map.
+
+```
+
+
+###stack
+```cpp
+#include <stack>
+
+```
+###queue
+```
+#include <queue>
+queue<int> que;
+	que.push();
+	que.pop();
+	que.size();
+	que.empty();
+	que.front();//返回最低端元素
+```
+
+
+###priority_queue
+```
+#include <queue>
+	priority_queue<int> p_que;
+	p_que.push(1);//添加元素1
+	p_que.pop();//弹出第一个元素
+	p_que.top();//返回第一个元素
+	p_que.size();返回优先队列中的元素个数
+	/*
+		priority_queue 添加进新的元素后会自动排序
+	*/
+```
+
+### hash
+```
+unordered_map
+unordeeed_set
+```
+
+
+# 3.模板
+
+## 4.DFS模板
+```cpp
+dx={0,0,1,-1};
+dy={1,-1,0,0};
+void dfs(int x,int y)
+{
+    if(x < 0 || y < 0 || x >= m || y >= n) return;
+    //访问越界，返回
+    if(vis[x][y]) return;
+    //访问过了，返回
+    
+    //visit
+    {
+    	...//一些别的操作
+    	vis[x][y] = 1;//表示访问过了
+    }
+    
+    for(int i = -1;i <= 1;i++)
+    	for(int j = -1;j <=1;j++)
+    		dfs(x+i,y+j);
+    //递归调用其他节点（八连通）
+    		
+    //递归调用（四联通）
+    //for(int i = 0;i < 4;i++)
+    //{
+    //    dfs(x+dx[i],y+dy[i]);
+    //}		
+}
+```
+
+ 
+## 11.尺取法  
+
+
 ## 15.其他
 1. 关于取模，有时关于一个固定的值取模，可以通过位运算实现。
 2. 读入按照字符串比较（数字比较） 

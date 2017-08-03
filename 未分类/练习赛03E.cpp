@@ -35,19 +35,37 @@ typedef long long ll;
 typedef std::pair<int,int> P;
 
 using namespace std;
-const int maxn = 80 + 5;
-char a[maxn];
+string s,t;
+const int maxn = 1e3 + 5;
+int dp[maxn][maxn];
+int n,m;
+void solve(){
+    n = s.length();
+    m = t.length();
+    memset(dp, 0, sizeof(dp));
+    for(int i = 0;i < n;i++)
+    {
+        for(int j = 0;j < m;j++)
+        {
+            if(s[i] == t[j])
+            {
+                dp[i+1][j+1] = dp[i][j] + 1;
+            }
+            else 
+            {
+                dp[i+1][j+1] = max(dp[i][j+1],dp[i+1][j]);
+            }
+        }
+    }
+}
+
+
 int main(/*int argc, char *argv[]*/) {
 	//ios::sync_with_stdio(false);
-	int n;scanf("%d",&n);getchar();
-    char t;
-    int sum = 0;
-    int O = 0;
-    while(~scanf("%c",&t))
+	while(cin>>s>>t)
     {
-        if(t == 'O'){O++;}
-        else if(t == 'X'){sum += (O*O+O)/2;O = 0;}
-        else if(t == '\n'){sum += (O*O+O)/2;O = 0;printf("%d\n",sum);sum = 0;}
+        solve();
+        cout<<dp[n][m]<<endl;
     }
 	return 0;
 }

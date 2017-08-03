@@ -35,19 +35,33 @@ typedef long long ll;
 typedef std::pair<int,int> P;
 
 using namespace std;
-const int maxn = 80 + 5;
-char a[maxn];
+char str[104];  
 int main(/*int argc, char *argv[]*/) {
-	//ios::sync_with_stdio(false);
-	int n;scanf("%d",&n);getchar();
-    char t;
-    int sum = 0;
-    int O = 0;
-    while(~scanf("%c",&t))
+	//ios::sync_with_stdio(false); 
+    int n; 
+    scanf("%d",&n);
+    while (n--)
     {
-        if(t == 'O'){O++;}
-        else if(t == 'X'){sum += (O*O+O)/2;O = 0;}
-        else if(t == '\n'){sum += (O*O+O)/2;O = 0;printf("%d\n",sum);sum = 0;}
+        scanf("%s",str); 
+        int len = strlen(str);  
+        for (int i = 1 ; i <= len ; i++)
+        {
+            if (len % i == 0)
+            { 
+                int k;
+                for (k = i ; k < len ; k++) 
+                {      
+                    if (str[k] != str[k%i]) break; 
+                }
+                
+                if (k == len)
+                { 
+                    printf("%d\n",i);
+                    break;
+                } 
+            }
+        }
+        if(n) putchar('\n');
     }
-	return 0;
+    return 0;  
 }
