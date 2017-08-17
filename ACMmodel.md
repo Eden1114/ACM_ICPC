@@ -1,40 +1,43 @@
 # ACM模板  
------------------
+----------------
 
 ## 0. 算法复杂度分析
-现在的计算机，1秒大约能执行10^8次简单运算   n = 1 000 000 ~ O(n)   n = 10 000 ~ O(nlgn)   n = 1 000 ~ O(n2), O(n2lgn)   n = 100 ~ O(n3)   n = 10 ~ O(an), O(n!)  
+现代的计算机，1秒大约能执行10^8次简单运算  *  n = 10^20 ~ O(lgn)  
+*  n = 10^12 ~ O(n^(1/2))
+*  n = 10^6  ~ O(n)  *  n = 10^5  ~ O(nlgn)  *  n = 10^3  ~ O(n2), O(n2lgn)  *  n = 10^2  ~ O(n3)  *  n = 10    ~ O(A(a,b)), O(n!)  
 
-也可以算出自己的算法的复杂度，带入数据的量一般为n，超过10^9一般就TLE了。
+用自己实现的算法的复杂度，与最大的数据量和题意比较就可以知道会不会TLE了。
 
 # 1.数学类
--------------------------------------
+-----------------
 ## 1.1.数论
 ### 1.1.1.筛法求素数  
 
 ```cpp
-const int MAX = 1000010;
-int Prime[MAX];
-int Mark[MAX];
-void prime()
+const int primes_maxn = 1e5+10;
+int primes[primes_maxn];
+int primes_vis[primes_maxn];
+int findPrime()
 {
-    int index = 0;
-    memset(Mark,0,sizeof(Mark));
-    for(int i = 2; i < MAX; i++)
+    int cnt = 0;
+    memset(primes_vis,0,sizeof(primes_vis));
+    for(int i = 2; i < primes_maxn; i++)
     {
-        if(Mark[i] == 0)
+        if(!primes_vis[i])
         {
-            Prime[index++] = i;
+            primes[cnt++] = i;
         }
-        for(int j = 0; j < index && Prime[j] * i < MAX; j++)
+        
+        for(int j = i+i; j < primes_maxn; j += i)
         {
-            Mark[i * Prime[j]] = 1;
-            if(i % Prime[j] == 0)
-                break;
+            primes_vis[j] = 1;
         }
     }
+    return cnt;
 }
 ```  
-其中Mark[x] == 0,x就是素数。 
+其中primes_vis[x] == 0,x就是素数。 
+primes[] 保存了1 ~ primes_maxn的素数。
 ### 1.1.2.最大公约数和最小公倍数（欧几里得算法）
 ```cpp 
 int gcd(int a, int b)
@@ -52,11 +55,47 @@ int lcm(int a,int b)
 ```
 
 ### 1.1.3.拓展欧几里得算法
-```cpp
+拓展欧几里得算法在求出最大公约数的同时，也完成了对方程：ax + by = gcd(a,b)的平凡整数解的求解。具体原理可以参照wikipedia。
 
 ```
-## 1.2.排列组合
-### 1.2.1.错排公式
+int extgcd(int a, int b, int &x, int &y)
+{
+    int d = a;
+    if(b != 0)
+    {
+    	d = extgcd(b, a%b, y, x);
+    	y -=(a / b) * x;
+    }
+    else
+    {
+    	x = 1;
+    	y = 0;
+    }
+    return d;
+}
+//依旧是a > b.
+
+```
+### 1.1.4.求约数
+```
+int divisor(int n)
+{
+	int cnt = 0;
+	int t = (int)sqrt(n);
+	for(i = 1;i < t + 1;i++)
+	{
+	
+	}
+	sort()
+}
+```
+
+### 1.1.5.勾股三元组(PPT)
+
+## 1.2.组合数学
+### 1.2.1.组合数
+
+### 1.2.2.错排公式
 问题： n本不同的书放在书架上。现重新摆放，使每本书都不在原来放的位置。有几种摆法？
 
 递归公式：  

@@ -1,20 +1,35 @@
+/*
+ *题号：
+ *时间：
+ *解题思想：动态规划入门
+ *
+ */
+//include <bits/stdc++.h>
+#include <functional>
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <utility>
 #include <string>
 #include <cstdio>
 #include <vector>
 #include <string>
+#include <cctype>
 #include <stack>
 #include <queue>
+#include <deque>
 #include <cmath>
 #include <map>
 #include <set>
-using namespace std;
+
+#define F(i,a,b) for(int i = a; i < b; i++)
+
 const double eps = 1e-8;
 const int INF = 0x3f3f3f3f;
-#define F(n) for(int i = 0; i < n; i++)
+
+
+using namepace std;
 int main(/*int argc, char *argv[]*/) {
     ios::sync_with_stdio(false);
     //N件物品 体积 Vi 价值 Wi  求一个背包

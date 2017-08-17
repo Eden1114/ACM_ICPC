@@ -1,9 +1,8 @@
 /*
- *题号：
+ *题号：HDU2089
  *时间：
  *解题思想：数位DP
  *
-    
  */
 //include <bits/stdc++.h>
 #include <functional>
@@ -106,6 +105,7 @@ int main(/*int argc, char *argv[]*/) {
 
 
 /*
+附件：
     数位DP模板
 int a[20];
 int dp[20][state];//不同题目状态不同

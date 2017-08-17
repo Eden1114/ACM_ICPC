@@ -1,7 +1,7 @@
 /*
- *题号：
+ *题号：http://www.bnuoj.com/v3/contest_show.php?cid=6865#problem/C
  *时间：
- *解题思想：
+ *解题思想：KMP变形
  *
  */
 //include <bits/stdc++.h>
