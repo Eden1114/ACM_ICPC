@@ -10,12 +10,15 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <utility>
 #include <string>
 #include <cstdio>
 #include <vector>
 #include <string>
+#include <cctype>
 #include <stack>
 #include <queue>
+#include <deque>
 #include <cmath>
 #include <map>
 #include <set>
@@ -34,42 +37,19 @@ typedef std::pair<int,int> P;
 using namespace std;
 
 int main(/*int argc, char *argv[]*/) {
-	ios::sync_with_stdio(false);
-	
-    //[=](int a,int b)
-    //{
-    //    return a>b;
-    //}
-    int a[] = {1,2,3,4,5};
-     
-    sort(a,a+5,[](int a,int b){return a>b;});
-    for(auto i : a)
+	//ios::sync_with_stdio(false);
+	int a,b,c,d;
+    scanf("%d%d",&a,&b);
+    scanf("%d%d",&c,&d);
+    int n = 10105;
+    for(int i = max(a+b,c+d);i < n;i++)
     {
-        cout<<i<<' '<<endl;
-    }
-    
-    
-    try{
-        int a = 0;
-        if(a == 1) throw false;
-        else throw true;
-    }
-    catch(bool b)
-    {
-        cout<<123;
-    }
-    iota();
-    /*
-    for(){
-        for(){
-            for(){
-                goto:l;
-            }
+        if()
+        {
+            cout<<i<<endl;
+            return 0;
         }
     }
-    
-    
-    l:
-        *///...
+    cout<<-1<<endl;
 	return 0;
 }

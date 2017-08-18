@@ -1,10 +1,11 @@
 # ACM模板  
 ----------------
 
-## 0. 算法复杂度分析
+# 0.算法复杂度分析
+----------------
 现代的计算机，1秒大约能执行10^8次简单运算  *  n = 10^20 ~ O(lgn)  
-*  n = 10^12 ~ O(n^(1/2))
-*  n = 10^6  ~ O(n)  *  n = 10^5  ~ O(nlgn)  *  n = 10^3  ~ O(n2), O(n2lgn)  *  n = 10^2  ~ O(n3)  *  n = 10    ~ O(A(a,b)), O(n!)  
+*  n = 10^12 ~ O(n^(1/2))  
+*  n = 10^6  ~ O(n)  *  n = 10^5  ~ O(nlgn)   *  n = 10^3  ~ O(n2), O(n2lgn)  *  n = 10^2  ~ O(n3)  *  n = 10    ~ O(A(a,b)), O(n!)  
 
 用自己实现的算法的复杂度，与最大的数据量和题意比较就可以知道会不会TLE了。
 
@@ -26,45 +27,49 @@ int findPrime()
         if(!primes_vis[i])
         {
             primes[cnt++] = i;
-        }
-        
-        for(int j = i+i; j < primes_maxn; j += i)
-        {
-            primes_vis[j] = 1;
+            for(int j = i+i; j < primes_maxn; j += i)
+            {
+                primes_vis[j] = 1;
+            }
         }
     }
     return cnt;
 }
 ```  
-其中primes_vis[x] == 0,x就是素数。 
+其中primes_vis[x] == 0,x就是素数。  
 primes[] 保存了1 ~ primes_maxn的素数。
 ### 1.1.2.最大公约数和最小公倍数（欧几里得算法）
 ```cpp 
-int gcd(int a, int b)
-{ 
-    return b == 0 ? a : gcd(b, a%b);
-} 
-//利用了恒等式:gcd(a,b) == gcd(b,a mod b)
-
-int lcm(int a,int b)
+//最大公约数
+long long gcd(long long a, long long b)
 {
-	return a/gcd(a,b)*b;
+    if (a < b) swap(a, b);
+    return b == 0 ? a : gcd(b, a % b);
+} 
+//相当于利用了恒等式:gcd(a,b) == gcd(b,a mod b)
+
+//最小公倍数
+long long lcm(long long a,long long b)
+{
+	if (a < b) swap(a, b);
+	return a / gcd(a, b) * b;
 }
 
-//两份代码都是a > b.
 ```
 
 ### 1.1.3.拓展欧几里得算法
-拓展欧几里得算法在求出最大公约数的同时，也完成了对方程：ax + by = gcd(a,b)的平凡整数解的求解。具体原理可以参照wikipedia。
+拓展欧几里得算法在求出最大公约数的同时，也完成了对方程：ax + by = gcd(a,b)的平凡整数解的求解。具体原理可以参照wikipedia。  
+
+***a,b,为正整数;x,y是整数;则形如ax+by的最小正整数是gcd(a,b)***  
 
 ```
 int extgcd(int a, int b, int &x, int &y)
 {
     int d = a;
-    if(b != 0)
+    if(b)
     {
     	d = extgcd(b, a%b, y, x);
-    	y -=(a / b) * x;
+    	y -= (a / b) * x;
     }
     else
     {
@@ -73,29 +78,87 @@ int extgcd(int a, int b, int &x, int &y)
     }
     return d;
 }
-//依旧是a > b.
-
+//在这里a,b要满足a > b.
 ```
 ### 1.1.4.求约数
 ```
-int divisor(int n)
+const int divisor_maxn = 1e3 + 10;
+int divisor[divisor_maxn];
+int findDivisor(int n)
 {
 	int cnt = 0;
-	int t = (int)sqrt(n);
-	for(i = 1;i < t + 1;i++)
-	{
-	
+	for(i = 1;i * i < n;i++)
+	{ 
+	    if (n % 1 == 0)
+	    {
+	    	res[cnt++] = i;
+	    	if(i*i != n)
+	    		res[cnt++] = n / i;
+	    }
 	}
-	sort()
+}
+```
+这里也可以用priority_queue来存约数，使得其有序。
+
+### 1.1.5.勾股三元组(PPT)
+参照数论概论的第一节推结论就好。
+
+### 1.1.6.逆元
+
+### 1.1.7中国剩余定理
+
+
+###拓展内容
+莫比乌斯反演  
+大数因数分解  
+Pollard rho 算法  
+二次剩余  
+Pell方程  
+原根  
+
+## 1.2.组合数学
+### 1.2.1.阶乘
+在计算排列组合的时候，阶乘是常常需要用到的值，因为阶乘增长的速度特别快，通常会对一个大质数取模（比如1e9+7）。在计算阶乘的时候，通常会进行预处理，以减小算法复杂度。
+
+```
+const int factor_maxn = 1e5 + 10;
+long long factor[factor_maxn];
+void findFactor(int mod = 1e9+7)
+{
+    factor[0] = 1;
+    for(int i = 1;i < factor_maxn;i++)
+    {
+        factor[i] = i * factor[i-1] % mod;
+    }
 }
 ```
 
-### 1.1.5.勾股三元组(PPT)
 
-## 1.2.组合数学
-### 1.2.1.组合数
+### 1.2.2.组合数
+对组合数的求解一般有四种。  
+1.暴力求解  
+**C(m,n) = n!/(m!*(n-m)!)**  
 
-### 1.2.2.错排公式
+2.递推公式  
+**C(m,n) = C(m,n-1)+C(m-1,n-1)**  
+一般用于n,m < 1000的情况
+
+3.预处理阶乘和阶乘的逆元  
+
+
+4.Lucas定理
+```
+ll lucas(ll n,ll m,int p)
+{
+    if(n<m)return 0;//非法组合数，方案数为0
+    if(n<p &&m<p)//可以直接计算，直接算逆元
+        return factor[n]*quickPow(factor[m]*factor[n-m]%p,p-2,p)%p;
+    else//不能算就用Lucas定理迭代
+        return lucas(n/p,m/p,p)*lucas(n%p,m%p,p)%p;
+}
+```
+
+### 1.2.3.错排公式
 问题： n本不同的书放在书架上。现重新摆放，使每本书都不在原来放的位置。有几种摆法？
 
 递归公式：  
@@ -510,7 +573,7 @@ Divide and Conquer
 ```cpp
 //快速幂 ans == a^b mod c
 
-long long PowerMod(long long a
+long long quickPow(long long a
 , long long b
 /*, long long c*/)
 {
@@ -738,8 +801,8 @@ unordeeed_set
 
 ## 4.DFS模板
 ```cpp
-dx={0,0,1,-1};
-dy={1,-1,0,0};
+dx[]={0,0,1,-1};
+dy[]={1,-1,0,0};
 void dfs(int x,int y)
 {
     if(x < 0 || y < 0 || x >= m || y >= n) return;
