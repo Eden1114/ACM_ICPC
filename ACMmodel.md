@@ -171,7 +171,57 @@ ll lucas(ll n,ll m,int p)
 **D(n) = [n!/e+0.5]** ，其中e是自然对数的底，[x]为x的整数部分  
 ## 1.3.矩阵
 ### 1.3.1.矩阵的实现
+```
+const int matrixm;
+const int matrixn;
+Template<class T>
+struct Matrix
+{
+    T  m[matrixm][matrixn];  
+};
+  
+
+```
 ### 1.3.2 矩阵运算
+矩阵的乘法
+
+```
+Matrix Mul(Matrix a,Matrix b)  
+{  
+    int i, j, k;  
+    Matrix c;  
+    for(i = 1; i <= ssize; i++)  
+    {  
+        for(j = 1; j <= ssize; j++)  
+        {  
+            c.m[i][j]=0;  
+            for(k = 1; k <= ssize; k++)  
+            {  
+                c.m[i][j]+=(a.m[i][k]*b.m[k][j]);  
+                c.m[i][j]%=mod;  
+            }  
+        }  
+    }  
+    return c;  
+}
+```
+
+###1.3.3矩阵快速幂
+
+  
+Matrix quickpagow(LL n)  
+{  
+    Matrix m = A, b = I;  
+    while(n)  
+    {  
+        if(n & 1)  
+            b = Mul(b,m);  
+        n = n >> 1;
+        m = Mul(m,m);
+    }
+    return b;  
+}  
+
 ## 1.4.大数和高精度
 ### 1.4.1.大数
 ```cpp
@@ -720,7 +770,7 @@ str.c_str();//返回对应的C type 字符串
 set<int> se;
 se.begin();//返回set容器的第一个元素
 
-se.end();//返回set容器的最后一个元素
+se.end();//返回set容器的最后一个元素的后继
 
 se.clear();//删除set容器中的所有的元素
 
