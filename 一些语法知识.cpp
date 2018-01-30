@@ -36,14 +36,36 @@ using namespace std;
 void function0(){cout<<"我是函数1"<<endl;}
 void function1(){cout<<"我是函数2"<<endl;}
 void function2(){cout<<"我是函数3"<<endl;}
-
+int cmp(int a, int b)
+{
+    if (a<b) return 1;
+    else return 0;
+}
 
 int main(/*int argc, char *argv[]*/) {
 	//ios::sync_with_stdio(false);
 	
     //语法糖1：lambda表达式
-    int a[] = {1,2,3,4,5};
+    int a[] = {1,2,4,3,5};
+    sort(a,a+5,cmp);
+    
+    for(auto i:a)
+    {
+        cout<<i;
+    }
+    
     sort(a,a+5,[](int a,int b){return a>b;});
+    
+    for(auto i:a)
+    {
+        cout<<i;
+    }
+    
+    for(int i = 0;i < 5;i++)
+    {
+        cout<<a[i];
+    }
+    
     /*
         匿名函数形如
         [](){}
@@ -99,8 +121,6 @@ int main(/*int argc, char *argv[]*/) {
         而应该直接暴露出来，有bug的地方就
         暴露出来，便于修改
     */
-    
-    
     
     //语法4：goto的用法
     while(1)
