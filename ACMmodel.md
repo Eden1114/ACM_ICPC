@@ -33,6 +33,7 @@ int findPrime()
             }
         }
     }
+    primes_vis[1] = 1;
     return cnt;
 }
 ```  
@@ -956,3 +957,73 @@ void dfs(int x,int y)
 6. `memset(array,sizeof(array));``memset(array,-1,sizeof(array);`一个用来初始化整个内存区域为0，一个用来初始化整个内存区域为1  
 7. 哈哈
  
+ 
+### 求逆序对模板
+ ```
+ class Array {
+public:
+    Array(const int& size): size(size) {
+        entry = new int[size];
+    }
+    ~Array() {
+        if (entry != NULL) {
+            delete [] entry;
+        }
+    }
+    int operator[](int i) const { return entry[i%size]; }
+    int& operator[](int i) { return entry[i%size]; }
+    int count() {
+        int* tmp = new int[size];
+        int c = sortAndCount(entry, tmp, 0, size-1, true);
+        delete [] tmp;
+        return c;
+    }
+private:
+    int sortAndCount(int* arr, int* tmp, int beg, int end, bool inArr) {
+        if (beg < end) {
+            int mid = (beg + end) / 2;
+            int c1  = sortAndCount(arr, tmp, beg, mid, !inArr);
+            int c2  = sortAndCount(arr, tmp, mid+1, end, !inArr);
+            int c3  = 0;
+            if (inArr) {
+                c3 = mergeAndCount(arr, tmp, beg, mid, end);
+            } else {
+                c3 = mergeAndCount(tmp, arr, beg, mid, end);
+            }
+            return c1 + c2 + c3;
+        } else {
+            if (!inArr)
+                tmp[beg] = arr[beg];
+            return 0;
+        }
+    }
+    int mergeAndCount(int* arr1, int* arr2, int beg, int mid, int end) {
+        int i = beg, j = mid+1, k = beg, c = 0;
+        while (i != mid+1 && j != end+1) {
+            if (arr2[i] < arr2[j]) {
+                arr1[k++] = arr2[i++];
+            } else {
+                arr1[k++] = arr2[j++];
+                c += mid - i + 1;
+            }
+        }
+        while (i != mid+1) arr1[k++] = arr2[i++];
+        while (j != end+1) arr1[k++] = arr2[j++];
+        return c;
+    }
+    int* entry;
+    int size;
+};
+
+int main() {
+    int size;
+    cin >> size;
+    Array arr(size);
+    for (int i = 0; i < size; ++i) {
+        cin >> arr[i];
+    }
+
+    cout << arr.count() << endl;
+    return 0;
+}
+ ```
