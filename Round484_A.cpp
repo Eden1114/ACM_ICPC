@@ -1,7 +1,7 @@
 /*
  *题号：
- *时间：
- *解题思想：
+ *时间：2018年05月15日22:51:40
+ *解题思想：水
  *
  */
 //include <bits/stdc++.h>
@@ -40,46 +40,32 @@ typedef long long LL;
 typedef long long ll;
 using namespace std;
 
+const int maxn = 1e5+10;
 int n;
-int len;
-const int maxl = 1e5+10;
-string str[5];
-int ans[5];
+int a[maxn];
+
 int main(/*int argc, char *argv[]*/) {
 //    ios::sync_with_stdio(false);
 //    freopen("in.txt","r",stdin);  
 //    freopen("out.txt","w",stdout);
     cin >> n;
-    for(int i = 0; i < 3;i++) {
-        cin >> str[i];
-        int len = str[i].length();
-        
-        map<char , int> mp;
-        int mx = -1;
-        for(int j = 0; j < len; j++) {
-            mp[str[i][j]] ++;
-            mx = max(mx, mp[str[i][j]]);
-        }
-
-        if(mx + n <= len) 
-            ans[i] = mx + n;
-        else
-            ans[i] = len;
-        
+    if(n == 1) {
+        cin >> n;
+        cout << n << endl;
+        return 0;
     }
     
+    for(int i = 0;i < n;i++)
+    {
+        cin >> a[i];
+    }
+    sort(a, a+n);
     
-    if(ans[0] > ans[1] && ans[0] > ans[2]) {
-        cout << "Kuro" << endl;
-    }
-    else if(ans[1] > ans[0] && ans[1] > ans[2]) {
-            cout << "Shiro" << endl;
-    }
-    else if(ans[2] > ans[1] && ans[2] > ans[0]) {
-            cout << "Katie" << endl;
+    if(n & 1) {
+        cout << a[(n-1)/2] << endl;
     }
     else {
-        cout << "Draw" << endl;
+        cout << a[n/2-1] << endl;
     }
     return 0;
 }

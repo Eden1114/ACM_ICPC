@@ -1,7 +1,7 @@
 /*
  *题号：
  *时间：
- *解题思想：
+ *解题思想：找规律 DP
  *
  */
 //include <bits/stdc++.h>
@@ -40,46 +40,40 @@ typedef long long LL;
 typedef long long ll;
 using namespace std;
 
+const int maxn = 5000 + 5;
 int n;
-int len;
-const int maxl = 1e5+10;
-string str[5];
-int ans[5];
+
+int a[maxn];
+int dp[maxn];
+
 int main(/*int argc, char *argv[]*/) {
 //    ios::sync_with_stdio(false);
 //    freopen("in.txt","r",stdin);  
 //    freopen("out.txt","w",stdout);
     cin >> n;
-    for(int i = 0; i < 3;i++) {
-        cin >> str[i];
-        int len = str[i].length();
-        
-        map<char , int> mp;
-        int mx = -1;
-        for(int j = 0; j < len; j++) {
-            mp[str[i][j]] ++;
-            mx = max(mx, mp[str[i][j]]);
-        }
-
-        if(mx + n <= len) 
-            ans[i] = mx + n;
-        else
-            ans[i] = len;
-        
+    for(int i =1;i <= n;i++)
+    {
+        cin >> a[i];
     }
     
+//    dp[1] = a[1];
+//    for(int i = 2; i <= n;i++)
+//    {
+//        dp[i] = a[i] ^ dp[i-1];
+//    }
     
-    if(ans[0] > ans[1] && ans[0] > ans[2]) {
-        cout << "Kuro" << endl;
+    int m;
+    cin >> m;
+    for(int i = 0;i < m;i++)
+    {
+        int l,r;
+        cin >> l >> r;
+        int ans = a[l];
+        ans ^= a[l+1];
+        ans ^= a[r-1];
+        ans ^= a[r];
+        cout << ans << endl;
     }
-    else if(ans[1] > ans[0] && ans[1] > ans[2]) {
-            cout << "Shiro" << endl;
-    }
-    else if(ans[2] > ans[1] && ans[2] > ans[0]) {
-            cout << "Katie" << endl;
-    }
-    else {
-        cout << "Draw" << endl;
-    }
+    
     return 0;
 }
